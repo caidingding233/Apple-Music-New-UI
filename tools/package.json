@@ -1,0 +1,34 @@
+{
+  "name": "apple-music-developer-tools",
+  "version": "1.0.0",
+  "description": "Apple Music MusicKit JS Developer Token 生成工具",
+  "main": "generate_developer_token.js",
+  "scripts": {
+    "generate-token": "node generate_developer_token.js",
+    "install-deps": "npm install",
+    "help": "node generate_developer_token.js --help"
+  },
+  "keywords": [
+    "apple-music",
+    "musickit",
+    "developer-token",
+    "jwt",
+    "flutter"
+  ],
+  "author": "Apple Music 鸿蒙版开发团队",
+  "license": "MIT",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/apple-music-harmony"
+  },
+  "bugs": {
+    "url": "https://github.com/your-repo/apple-music-harmony/issues"
+  },
+  "homepage": "https://github.com/your-repo/apple-music-harmony#readme"
+} 

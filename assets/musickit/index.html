@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎵 Apple Music - MusicKit JS</title>
+    <script src="https://js-cdn.music.apple.com/musickit/v1/musickit.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: linear-gradient(45deg, #007AFF, #5856D6);
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.4);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            transform: none;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+        .hidden {
+            display: none;
+        }
+        .player-controls {
+            margin-top: 30px;
+        }
+        .player-controls .btn {
+            width: calc(50% - 10px);
+            display: inline-block;
+        }
+        .track-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #007AFF;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🎵</div>
+        <h1>Apple Music</h1>
+        <p>真正的在线音乐播放体验</p>
+        
+        <div id="loginSection">
+            <button id="authorizeBtn" class="btn">🍎 登录 Apple Music</button>
+            <div class="status" id="status">等待登录...</div>
+        </div>
+        
+        <div id="playerSection" class="hidden">
+            <div class="track-info">
+                <h3 id="trackTitle">未选择歌曲</h3>
+                <p id="trackArtist">-</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+            </div>
+            
+            <div class="player-controls">
+                <button id="playBtn" class="btn">▶️ 播放</button>
+                <button id="pauseBtn" class="btn">⏸️ 暂停</button>
+            </div>
+            
+            <div class="player-controls">
+                <button id="demoSong1" class="btn">🎵 播放热门歌曲</button>
+                <button id="demoSong2" class="btn">🎶 播放推荐歌曲</button>
+            </div>
+            
+            <button id="logoutBtn" class="btn" style="background: linear-gradient(45deg, #FF3B30, #FF9500); margin-top: 20px;">🚪 退出登录</button>
+        </div>
+    </div>
+
+    <script>
+        let musicKit;
+        let isInitialized = false;
+        let currentTrack = null;
+        
+        // MusicKit JS 配置
+        const DEVELOPER_TOKEN = 'YOUR_DEVELOPER_TOKEN_HERE'; // 需要替换为真实的开发者令牌
+        
+        // 状态元素
+        const statusEl = document.getElementById('status');
+        const loginSection = document.getElementById('loginSection');
+        const playerSection = document.getElementById('playerSection');
+        const authorizeBtn = document.getElementById('authorizeBtn');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const demoSong1 = document.getElementById('demoSong1');
+        const demoSong2 = document.getElementById('demoSong2');
+        
+        // 播放信息元素
+        const trackTitle = document.getElementById('trackTitle');
+        const trackArtist = document.getElementById('trackArtist');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        
+        // 更新状态显示
+        function updateStatus(message, isError = false) {
+            statusEl.textContent = message;
+            statusEl.style.background = isError ? 'rgba(255, 59, 48, 0.3)' : 'rgba(52, 199, 89, 0.3)';
+            console.log('状态更新:', message);
+            
+            // 通知Flutter
+            if (window.flutter_inappwebview) {
+                window.flutter_inappwebview.callHandler('onStatusUpdate', {
+                    message: message,
+                    isError: isError
+                });
+            }
+        }
+        
+        // MusicKit 初始化
+        document.addEventListener('musickitloaded', function() {
+            console.log('MusicKit JS 已加载');
+            
+            try {
+                musicKit = MusicKit.configure({
+                    developerToken: DEVELOPER_TOKEN,
+                    app: {
+                        name: 'Apple Music 鸿蒙版',
+                        build: '1.0.0'
+                    }
+                });
+                
+                isInitialized = true;
+                updateStatus('🎵 MusicKit 初始化成功');
+                authorizeBtn.disabled = false;
+                
+                // 监听播放事件
+                musicKit.addEventListener('playbackStateDidChange', handlePlaybackStateChange);
+                musicKit.addEventListener('nowPlayingItemDidChange', handleNowPlayingItemChange);
+                musicKit.addEventListener('playbackTimeDidChange', handlePlaybackTimeChange);
+                
+            } catch (error) {
+                console.error('MusicKit 初始化失败:', error);
+                updateStatus('❌ MusicKit 初始化失败: ' + error.message, true);
+            }
+        });
+        
+        // Apple Music 授权登录
+        async function authorize() {
+            if (!isInitialized) {
+                updateStatus('❌ MusicKit 未初始化', true);
+                return;
+            }
+            
+            try {
+                updateStatus('🔐 正在授权...');
+                authorizeBtn.disabled = true;
+                
+                const userToken = await musicKit.authorize();
+                console.log('授权成功，User Token:', userToken);
+                
+                updateStatus('✅ 登录成功！');
+                
+                // 显示播放器界面
+                loginSection.classList.add('hidden');
+                playerSection.classList.remove('hidden');
+                
+                // 通知Flutter登录成功
+                if (window.flutter_inappwebview) {
+                    window.flutter_inappwebview.callHandler('onAuth', {
+                        userToken: userToken,
+                        isAuthorized: true
+                    });
+                }
+                
+            } catch (error) {
+                console.error('授权失败:', error);
+                updateStatus('❌ 登录失败: ' + error.message, true);
+                authorizeBtn.disabled = false;
+                
+                // 通知Flutter登录失败
+                if (window.flutter_inappwebview) {
+                    window.flutter_inappwebview.callHandler('onAuth', {
+                        error: error.message,
+                        isAuthorized: false
+                    });
+                }
+            }
+        }
+        
+        // 播放歌曲
+        async function playSong(songId, songTitle = '') {
+            if (!musicKit || !musicKit.isAuthorized) {
+                updateStatus('❌ 请先登录 Apple Music', true);
+                return;
+            }
+            
+            try {
+                updateStatus('🎵 正在加载歌曲...');
+                
+                await musicKit.setQueue({
+                    song: songId
+                });
+                
+                await musicKit.play();
+                updateStatus(`▶️ 正在播放: ${songTitle || songId}`);
+                
+                // 通知Flutter播放状态
+                if (window.flutter_inappwebview) {
+                    window.flutter_inappwebview.callHandler('onPlaybackStart', {
+                        songId: songId,
+                        songTitle: songTitle
+                    });
+                }
+                
+            } catch (error) {
+                console.error('播放失败:', error);
+                updateStatus('❌ 播放失败: ' + error.message, true);
+            }
+        }
+        
+        // 处理播放状态变化
+        function handlePlaybackStateChange() {
+            const state = musicKit.playbackState;
+            console.log('播放状态变化:', state);
+            
+            if (window.flutter_inappwebview) {
+                window.flutter_inappwebview.callHandler('onPlaybackStateChange', {
+                    state: state
+                });
+            }
+        }
+        
+        // 处理当前播放项变化
+        function handleNowPlayingItemChange() {
+            const nowPlayingItem = musicKit.nowPlayingItem;
+            if (nowPlayingItem) {
+                trackTitle.textContent = nowPlayingItem.title || '未知歌曲';
+                trackArtist.textContent = nowPlayingItem.artistName || '未知艺术家';
+                
+                console.log('当前播放:', nowPlayingItem.title, '-', nowPlayingItem.artistName);
+                
+                if (window.flutter_inappwebview) {
+                    window.flutter_inappwebview.callHandler('onTrackChange', {
+                        title: nowPlayingItem.title,
+                        artist: nowPlayingItem.artistName,
+                        artwork: nowPlayingItem.artwork
+                    });
+                }
+            }
+        }
+        
+        // 处理播放时间变化
+        function handlePlaybackTimeChange() {
+            const currentTime = musicKit.currentPlaybackTime;
+            const duration = musicKit.currentPlaybackDuration;
+            
+            if (duration > 0) {
+                const progress = (currentTime / duration) * 100;
+                progressFill.style.width = progress + '%';
+                
+                currentTimeEl.textContent = formatTime(currentTime);
+                durationEl.textContent = formatTime(duration);
+            }
+        }
+        
+        // 时间格式化
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+        
+        // 退出登录
+        function logout() {
+            if (musicKit) {
+                musicKit.unauthorize();
+            }
+            
+            loginSection.classList.remove('hidden');
+            playerSection.classList.add('hidden');
+            authorizeBtn.disabled = false;
+            
+            updateStatus('👋 已退出登录');
+            
+            if (window.flutter_inappwebview) {
+                window.flutter_inappwebview.callHandler('onLogout', {});
+            }
+        }
+        
+        // 事件监听器
+        authorizeBtn.addEventListener('click', authorize);
+        playBtn.addEventListener('click', () => musicKit && musicKit.play());
+        pauseBtn.addEventListener('click', () => musicKit && musicKit.pause());
+        logoutBtn.addEventListener('click', logout);
+        
+        // 演示歌曲（需要替换为真实的Apple Music曲目ID）
+        demoSong1.addEventListener('click', () => playSong('1490910932', 'Blinding Lights - The Weeknd'));
+        demoSong2.addEventListener('click', () => playSong('1463965103', 'Watermelon Sugar - Harry Styles'));
+        
+        // 提供给Flutter调用的函数
+        window.playAppleMusicSong = playSong;
+        window.pauseAppleMusic = () => musicKit && musicKit.pause();
+        window.resumeAppleMusic = () => musicKit && musicKit.play();
+        window.getPlaybackState = () => musicKit ? musicKit.playbackState : null;
+        
+        console.log('🎵 Apple Music MusicKit JS 界面加载完成');
+        updateStatus('🍎 点击按钮登录 Apple Music');
+    </script>
+</body>
+</html> 

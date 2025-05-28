@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'dart:ui';
 import 'package:musicplayer/lists_constants.dart';
 class SearchPage extends StatefulWidget {
-  SearchPage({super.key});
+  const SearchPage({super.key});
 
   @override
   State<SearchPage> createState() => _SearchPageState();

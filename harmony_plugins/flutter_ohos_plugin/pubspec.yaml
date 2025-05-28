@@ -1,0 +1,34 @@
+name: flutter_ohos_plugin
+description: Flutter plugin for OpenHarmony OS integration
+version: 0.0.1
+
+environment:
+  sdk: '>=2.19.0 <3.0.0'
+  flutter: ">=3.7.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  # This section identifies this Flutter project as a plugin project.
+  # The 'pluginClass' specifies the class (in Java, for Android, or ObjectiveC, for iOS)
+  # which should be registered in the plugin registry. This is required for
+  # using method channels.
+  # The Android package identifiers are no longer required if there's a pluginClass.
+  # The android and ios sections here are optional.
+  plugin:
+    platforms:
+      ohos:
+        pluginClass: FlutterOhosPlugin
+        package: com.example.flutter_ohos_plugin 

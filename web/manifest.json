@@ -1,11 +1,11 @@
 {
-     "name": "Apple Music",
+     "name": "Apple Music 鸿蒙版",
      "short_name": "Apple Music",
      "start_url": ".",
      "display": "standalone",
      "background_color": "#0175C2",
      "theme_color": "#0175C2",
-     "description": "A new Flutter project.",
+     "description": "Apple Music 鸿蒙版 Flutter Web应用",
      "orientation": "portrait-primary",
      "prefer_related_applications": false,
      "icons": [

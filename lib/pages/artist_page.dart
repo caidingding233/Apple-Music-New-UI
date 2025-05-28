@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ArtistPage extends StatefulWidget {
-  ArtistPage({super.key});
+  const ArtistPage({super.key});
 
   @override
   State<ArtistPage> createState() => _ArtistPageState();
@@ -108,7 +108,7 @@ class _ArtistPageState extends State<ArtistPage> {
         'https://pyxis.nymag.com/v1/imgs/bbd/548/389fe4f4ad9bfe3433aa226af52cacec00-02-dj-khaled-weight-watchers.rhorizontal.w700.jpg',
         'image':
         'https://pyxis.nymag.com/v1/imgs/bbd/548/389fe4f4ad9bfe3433aa226af52cacec00-02-dj-khaled-weight-watchers.rhorizontal.w700.jpg',
-        'song': 'I’m the One',
+        'song': 'I\'m the One',
         'album': 'Grateful',
       },
       {
@@ -126,7 +126,7 @@ class _ArtistPageState extends State<ArtistPage> {
         'https://pyxis.nymag.com/v1/imgs/bbd/548/389fe4f4ad9bfe3433aa226af52cacec00-02-dj-khaled-weight-watchers.rhorizontal.w700.jpg',
         'image':
         'https://pyxis.nymag.com/v1/imgs/bbd/548/389fe4f4ad9bfe3433aa226af52cacec00-02-dj-khaled-weight-watchers.rhorizontal.w700.jpg',
-        'song': 'I Got the Keys',
+        'song': 'Keep It with Mine',
         'album': 'Major Key',
       },
     ],
@@ -147,7 +147,7 @@ class _ArtistPageState extends State<ArtistPage> {
         'https://c4.wallpaperflare.com/wallpaper/951/930/504/bebe-rexha-singer-music-girls-wallpaper-preview.jpg',
         'image':
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb08sNRpn_aOEduUwxjXm12Lclvq0Ji5zFoA&s',
-        'song': 'I’m a Mess',
+        'song': 'I\'m a Mess',
         'album': 'Expectations',
       },
       {
@@ -165,7 +165,7 @@ class _ArtistPageState extends State<ArtistPage> {
         'https://c4.wallpaperflare.com/wallpaper/951/930/504/bebe-rexha-singer-music-girls-wallpaper-preview.jpg',
         'image':
         'https://c4.wallpaperflare.com/wallpaper/951/930/504/bebe-rexha-singer-music-girls-wallpaper-preview.jpg',
-        'song': 'You Can’t Stop the Girl',
+        'song': 'You Can\'t Stop the Girl',
         'album': 'The Way I Are',
       },
     ],
@@ -333,7 +333,7 @@ class _ArtistPageState extends State<ArtistPage> {
         'https://m.media-amazon.com/images/M/MV5BNjIxYzRiMTgtN2Y2Ni00Zjg0LTkxOWEtMTg1Y2UxZjliM2MwL2ltYWdlXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg',
         'image':
         'https://m.media-amazon.com/images/M/MV5BNjIxYzRiMTgtN2Y2Ni00Zjg0LTkxOWEtMTg1Y2UxZjliM2MwL2ltYWdlXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg',
-        'song': 'I’m Not Saying',
+        'song': 'I\'m Not Saying',
         'album': 'Chelsea Girls',
       },
       {
@@ -342,7 +342,7 @@ class _ArtistPageState extends State<ArtistPage> {
         'https://m.media-amazon.com/images/M/MV5BNjIxYzRiMTgtN2Y2Ni00Zjg0LTkxOWEtMTg1Y2UxZjliM2MwL2ltYWdlXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg',
         'image':
         'https://m.media-amazon.com/images/M/MV5BNjIxYzRiMTgtN2Y2Ni00Zjg0LTkxOWEtMTg1Y2UxZjliM2MwL2ltYWdlXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg',
-        'song': 'I’ll Keep It with Mine',
+        'song': 'I\'ll Keep It with Mine',
         'album': 'Chelsea Girls',
       },
       {
@@ -360,7 +360,7 @@ class _ArtistPageState extends State<ArtistPage> {
         'https://m.media-amazon.com/images/M/MV5BNjIxYzRiMTgtN2Y2Ni00Zjg0LTkxOWEtMTg1Y2UxZjliM2MwL2ltYWdlXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg',
         'image':
         'https://m.media-amazon.com/images/M/MV5BNjIxYzRiMTgtN2Y2Ni00Zjg0LTkxOWEtMTg1Y2UxZjliM2MwL2ltYWdlXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg',
-        'song': 'It Was a Pleasure Then',
+        'song': "I'm the One",
         'album': 'Chelsea Girls',
       },
     ]

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:musicplayer/lists_constants.dart';
 
 class MusicList extends StatefulWidget {
-  MusicList({super.key});
+  const MusicList({super.key});
 
   @override
   State<MusicList> createState() => _MusicListState();

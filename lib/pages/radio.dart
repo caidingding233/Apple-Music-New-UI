@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:musicplayer/lists_constants.dart';
 import 'dart:ui';
 class RadioPage extends StatefulWidget {
-  RadioPage({super.key});
+  const RadioPage({super.key});
 
   @override
   State<RadioPage> createState() => _RadioPageState();

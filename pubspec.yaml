@@ -1,5 +1,5 @@
 name: musicplayer
-description: "A new Flutter project."
+description: "Apple Music Flutter版本的鸿蒙移植版"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -19,7 +19,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
+  sdk: '>=2.19.0 <3.0.0'
+  flutter: ">=3.7.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -31,20 +32,34 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
-  audioplayers: ^5.2.1
-  http: ^1.2.1
-  glassmorphism_widgets: ^0.2.2
+  cupertino_icons: ^1.0.2
+  # 状态管理
+  provider: ^6.0.5
+  # 音频播放库 - 适配Flutter 3.7.12版本
+  audioplayers: ^3.0.1
+  just_audio: ^0.9.30
+  # 网络请求
+  http: ^0.13.5
+  # UI效果库 - 使用兼容版本
   sticky_headers: ^0.3.0+2
-  glassmorphism: ^3.0.0
-  icons_plus: ^5.0.0
-  icons_flutter: ^0.0.4
-  flutter_launcher_icons: ^0.13.1
-  rename_app: ^1.3.2
+  # 媒体控制 - 使用兼容Flutter 3.7.12的版本
+  audio_service: ^0.18.9
+  # 设备信息和平台检测
+  device_info_plus: ^8.2.2
+  platform: ^3.1.0
+  # 鸿蒙专用依赖
+  # flutter_ohos_plugin:
+  #   path: ./harmony_plugins/flutter_ohos_plugin
+  # 添加调色板生成器用于主题色提取
   palette_generator: ^0.3.3+3
+  # WebView支持 - 用于集成Apple Music网页版
+  webview_flutter: ^3.0.4
+  # 高级 WebView 支持，兼容 Dart 2.19 并支持 macOS
+  flutter_inappwebview: ^5.7.2+3
+  # Web平台WebView支持
+  # 增强的WebView支持，用于网络拦截和Cookie管理
 
 dev_dependencies:
   flutter_test:
@@ -55,13 +70,8 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "assets/play_store_512.png"
-  adaptive_icon_background: "#000000"
-  adaptive_icon_foreground: "assets/play_store_512.png"
+  flutter_lints: ^2.0.0
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -75,6 +85,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/musickit/
     
 
 

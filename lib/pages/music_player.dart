@@ -9,7 +9,7 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:musicplayer/lists_constants.dart';
 
 class MusicPlayer extends StatefulWidget {
-  MusicPlayer({super.key});
+  const MusicPlayer({super.key});
 
   @override
   State<MusicPlayer> createState() => _MusicPlayerState();
@@ -259,7 +259,6 @@ class _MusicPlayerState extends State<MusicPlayer> {
                       inactiveTickMarkColor: Colors.transparent,
                       disabledActiveTrackColor: Colors.transparent,
                       secondaryActiveTrackColor: Colors.transparent,
-                      valueIndicatorStrokeColor: Colors.transparent,
                       disabledInactiveTrackColor: Colors.transparent,
                       disabledActiveTickMarkColor: Colors.transparent,
                       overlappingShapeStrokeColor: Colors.transparent,

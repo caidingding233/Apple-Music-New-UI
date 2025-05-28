@@ -1,0 +1,17 @@
+音乐应用图片资源说明
+===================
+
+请在此文件夹中添加以下图片文件：
+
+1. piano_cover.jpg - 钢琴音乐封面
+2. classical_cover.jpg - 古典音乐封面  
+3. debussy_cover.jpg - 德彪西专辑封面
+4. chopin_cover.jpg - 肖邦专辑封面
+5. nature_cover.jpg - 自然音乐封面
+6. favorites_cover.jpg - 收藏夹封面
+7. classical_playlist.jpg - 古典播放列表封面
+8. relax_playlist.jpg - 放松播放列表封面
+9. default_playlist.jpg - 默认播放列表封面
+
+注意：这些图片文件用于音乐应用的专辑封面和播放列表封面显示。
+如果没有实际图片文件，应用会使用默认的占位符图片。 

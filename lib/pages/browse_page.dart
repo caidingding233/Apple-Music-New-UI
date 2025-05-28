@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:ui';
 class BrowsePage extends StatefulWidget {
-  BrowsePage({super.key});
+  const BrowsePage({super.key});
 
   @override
   State<BrowsePage> createState() => _BrowsePageState();

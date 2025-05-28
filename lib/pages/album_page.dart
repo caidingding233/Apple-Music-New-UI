@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AlbumPage extends StatefulWidget {
-   AlbumPage({super.key});
+  const AlbumPage({super.key});
 
   @override
   State<AlbumPage> createState() => _AlbumPageState();

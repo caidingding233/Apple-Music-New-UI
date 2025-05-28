@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:ui';
 class LibraryPage extends StatefulWidget {
-  LibraryPage({super.key});
+  const LibraryPage({super.key});
 
   @override
   State<LibraryPage> createState() => _LibraryPageState();
